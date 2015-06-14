@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/grit96/async-tools.git"
+    "url": "git@github.com:grit96/async-tools.git"
   },
   "author": "Geraint White <geraintwhite@gmail.com>",
   "license": "MIT",
