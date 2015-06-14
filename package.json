@@ -1,0 +1,19 @@
+{
+  "name": "async-tools",
+  "version": "1.0.0",
+  "description": "Useful async functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grit96/async-tools.git"
+  },
+  "author": "Geraint White <geraintwhite@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/grit96/async-tools/issues"
+  },
+  "homepage": "https://github.com/grit96/async-tools#readme"
+}
