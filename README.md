@@ -13,37 +13,66 @@ Calls a callback for each item in a list after one another
 
 ### Params
 - **Array** `list`: An array of values to be passed into the callback
-- **Function** `cb`: The callback function called with each list item
+- **forEachSyncCallback** `cb`: The callback function called with each list item
 - **Function** `fin`: The callback function called at the end
+
+## `forEachSyncCallback(item, next, fin)`
+
+### Params
+- **Anything** `item`: The item at the current iteration of the loop
+- **Function** `next`: The callback function called to advance the loop
+- **Function** `fin`: The callback function called to end the loop early
 
 ## `forEach(list, cb, fin)`
 Calls a callback for each item in a list at the same time
 
 ### Params
 - **Array** `list`: An array of values to be passed into the callback
-- **Function** `cb`: The callback function called with each list item
+- **forEachCallback** `cb`: The callback function called with each list item
 - **Function** `fin`: The callback function called at the end
+
+## `forEachCallback(item, done)`
+
+### Params
+- **Anything** `item`: The item at the current iteration of the loop
+- **Function** `done`: The callback function called to end the current iteration
 
 ## `whileSync(cb, fin)`
 Calls a callback repeatedly until a condition is met
 
 ### Params
-- **Function** `cb`: The callback function to determine the condition
+- **whileSyncCallback** `cb`: The callback function called to get the condition value
 - **Function** `fin`: The callback function called at the end
+
+## `whileSyncCallback(next)`
+
+### Params
+- **Function** `next`: The callback function called with the condition value to advance the loop
 
 ## `forEachFunctionSync(funcs, fin)`
 Calls functions in a list after one another
 
 ### Params
-- **Array** `funcs`: An array of functions to be called
+- **Array** `funcs`: An array of functions (`forEachFunctionSyncCallback`) to be called
 - **Function** `fin`: The callback function called at the end
+
+## `forEachFunctionSyncCallback(next, fin)`
+
+### Params
+- **Function** `next`: The callback function called to advance the loop
+- **Function** `fin`: The callback function called to end the loop early
 
 ## `forEachFunction(funcs, fin)`
 Calls functions in a list at the same time
 
 ### Params
-- **Array** `funcs`: An array of functions to be called
+- **Array** `funcs`: An array of functions (`forEachFunctionCallback`) to be called
 - **Function** `fin`: The callback function called at the end
+
+## `forEachFunctionCallback(done)`
+
+### Params
+- **Function** `done`: The callback function called to end the current iteration
 
 ## `wait(cond, cb, dur)`
 Blocks until a condition is met
@@ -51,7 +80,7 @@ Blocks until a condition is met
 ### Params
 - **Function** `cond`: The condition function - returns True when condition is met
 - **Function** `cb`: The callback function called when the condition is met
-- **number** `dur`: Duration between condition checks - default 500ms
+- **Number** `dur`: Duration between condition checks - default 500ms
 
 
 
