@@ -29,13 +29,13 @@ Calls a callback for each item in a list at the same time
 ### Params
 - **Array** `list`: An array of values to be passed into the callback
 - **forEachCallback** `cb`: The callback function called with each list item
-- **Function** `fin`: The callback function called at the end
+- **Function** `fin`: The callback function called at the end with error Boolean
 
 ## `forEachCallback(item, done)`
 
 ### Params
 - **Anything** `item`: The item at the current iteration of the loop
-- **Function** `done`: The callback function called to end the current iteration
+- **Function** `done`: The callback function called to end the current iteration with optional error Boolean
 
 ## `whileSync(cb, fin)`
 Calls a callback repeatedly until a condition is met
@@ -67,12 +67,12 @@ Calls functions in a list at the same time
 
 ### Params
 - **Array** `funcs`: An array of functions (`forEachFunctionCallback`) to be called
-- **Function** `fin`: The callback function called at the end
+- **Function** `fin`: The callback function called at the end with error Boolean
 
 ## `forEachFunctionCallback(done)`
 
 ### Params
-- **Function** `done`: The callback function called to end the current iteration
+- **Function** `done`: The callback function called to end the current iteration with optional error Boolean
 
 ## `wait(cond, cb, dur)`
 Blocks until a condition is met

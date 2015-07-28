@@ -34,19 +34,22 @@ module.exports = (function () {
    * @function
    * @param {Array} list An array of values to be passed into the callback
    * @param {forEachCallback} cb The callback function called with each list item
-   * @param {Function} fin The callback function called at the end
+   * @param {Function} fin The callback function called at the end with error Boolean
    */
 
   /**
    * @name forEachCallback
    * @callback
    * @param {Anything} item The item at the current iteration of the loop
-   * @param {Function} done The callback function called to end the current iteration
+   * @param {Function} done The callback function called to end the current iteration with optional error Boolean
    */
 
   asyncUtils.forEach = function (list, cb, fin) {
-    var i = 0;
-    function done () { if (++i == list.length) fin(); }
+    var i = 0, error = false;
+    function done (err) {
+      error = error || (err || false);
+      if (++i == list.length) fin(error);
+    }
     list.forEach(function (item) { cb(item, done); });
   };
 
@@ -102,18 +105,21 @@ module.exports = (function () {
    * @name forEachFunction
    * @function
    * @param {Array} funcs An array of functions (`forEachFunctionCallback`) to be called
-   * @param {Function} fin The callback function called at the end
+   * @param {Function} fin The callback function called at the end with error Boolean
    */
 
   /**
    * @name forEachFunctionCallback
    * @callback
-   * @param {Function} done The callback function called to end the current iteration
+   * @param {Function} done The callback function called to end the current iteration with optional error Boolean
    */
 
   asyncUtils.forEachFunction = function (funcs, fin) {
-    var i = 0;
-    function done () { if (++i == funcs.length) fin(); }
+    var i = 0, error = false;
+    function done (err) {
+      error = error || (err || false);
+      if (++i == funcs.length) fin(error);
+    }
     funcs.forEach(function (func) { func(done); });
   };
 
