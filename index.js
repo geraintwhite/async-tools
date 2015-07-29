@@ -142,5 +142,55 @@ module.exports = (function () {
   };
 
 
+  /**
+   * Promise like interface to `forEachFunctionSync`
+   * @name syncFuncLoop
+   * @function
+   * @param {syncFuncLoopCallback} func The initial callback function to run
+   * @return {Object} syncFuncLoop object containing the following methods:
+   *
+   *  - `then` (syncFuncLoopCallback): Register a method to be called after `next()`
+   *  - `finally` (Function): Register a method to be called at the end with error message parameter
+   */
+
+  /**
+   * @name syncFuncLoopCallback
+   * @callback
+   * @param {Function} next The callback function called to advance the loop
+   * @param {Function} fin The callback function called to end the loop early with optional error message parameter
+   */
+
+  function syncFuncLoop (func) {
+    var funcs = [func], fin;
+
+    this.then = function (func) {
+      funcs.push(func);
+      return this;
+    };
+
+    this.finally = function (func) {
+      fin = func;
+      next();
+    };
+
+    function next() {
+      if (funcs.length) funcs.shift()(next, fin);
+      else if (typeof fin === 'function') fin();
+    }
+  }
+
+
+  /**
+   * Return new instance of `syncFuncLoop`
+   * @name run
+   * @function
+   * @param {syncFuncLoopCallback} func The initial callback function to run
+   */
+
+  asyncUtils.run = function (func) {
+    return new syncFuncLoop(func);
+  };
+
+
   return asyncUtils;
 })();

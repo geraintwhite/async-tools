@@ -1,4 +1,5 @@
 # async-tools
+
 Useful async functions
 
 ## Installation
@@ -8,81 +9,103 @@ $ npm install async-tools
 ```
 
 ## Documentation
-## `forEachSync(list, cb, fin)`
+
+### `forEachSync(list, cb, fin)`
 Calls a callback for each item in a list after one another
 
-### Params
+#### Params
 - **Array** `list`: An array of values to be passed into the callback
 - **forEachSyncCallback** `cb`: The callback function called with each list item
 - **Function** `fin`: The callback function called at the end
 
-## `forEachSyncCallback(item, next, fin)`
+### `forEachSyncCallback(item, next, fin)`
 
-### Params
+#### Params
 - **Anything** `item`: The item at the current iteration of the loop
 - **Function** `next`: The callback function called to advance the loop
 - **Function** `fin`: The callback function called to end the loop early
 
-## `forEach(list, cb, fin)`
+### `forEach(list, cb, fin)`
 Calls a callback for each item in a list at the same time
 
-### Params
+#### Params
 - **Array** `list`: An array of values to be passed into the callback
 - **forEachCallback** `cb`: The callback function called with each list item
 - **Function** `fin`: The callback function called at the end with error Boolean
 
-## `forEachCallback(item, done)`
+### `forEachCallback(item, done)`
 
-### Params
+#### Params
 - **Anything** `item`: The item at the current iteration of the loop
 - **Function** `done`: The callback function called to end the current iteration with optional error Boolean
 
-## `whileSync(cb, fin)`
+### `whileSync(cb, fin)`
 Calls a callback repeatedly until a condition is met
 
-### Params
+#### Params
 - **whileSyncCallback** `cb`: The callback function called to get the condition value
 - **Function** `fin`: The callback function called at the end
 
-## `whileSyncCallback(next)`
+### `whileSyncCallback(next)`
 
-### Params
+#### Params
 - **Function** `next`: The callback function called with the condition value to advance the loop
 
-## `forEachFunctionSync(funcs, fin)`
+### `forEachFunctionSync(funcs, fin)`
 Calls functions in a list after one another
 
-### Params
+#### Params
 - **Array** `funcs`: An array of functions (`forEachFunctionSyncCallback`) to be called
 - **Function** `fin`: The callback function called at the end
 
-## `forEachFunctionSyncCallback(next, fin)`
+### `forEachFunctionSyncCallback(next, fin)`
 
-### Params
+#### Params
 - **Function** `next`: The callback function called to advance the loop
 - **Function** `fin`: The callback function called to end the loop early
 
-## `forEachFunction(funcs, fin)`
+### `forEachFunction(funcs, fin)`
 Calls functions in a list at the same time
 
-### Params
+#### Params
 - **Array** `funcs`: An array of functions (`forEachFunctionCallback`) to be called
 - **Function** `fin`: The callback function called at the end with error Boolean
 
-## `forEachFunctionCallback(done)`
+### `forEachFunctionCallback(done)`
 
-### Params
+#### Params
 - **Function** `done`: The callback function called to end the current iteration with optional error Boolean
 
-## `wait(cond, cb, dur)`
+### `wait(cond, cb, dur)`
 Blocks until a condition is met
 
-### Params
+#### Params
 - **Function** `cond`: The condition function - returns True when condition is met
 - **Function** `cb`: The callback function called when the condition is met
 - **Number** `dur`: Duration between condition checks - default 500ms
 
+### `syncFuncLoop(func)`
+Promise like interface to `forEachFunctionSync`
 
+#### Params
+- **syncFuncLoopCallback** `func`: The initial callback function to run
+
+#### Return
+- **Object** syncFuncLoop object containing the following methods:
+ - `then` (syncFuncLoopCallback): Register a method to be called after `next()`
+ - `finally` (Function): Register a method to be called at the end with error message parameter
+
+### `syncFuncLoopCallback(next, fin)`
+
+#### Params
+- **Function** `next`: The callback function called to advance the loop
+- **Function** `fin`: The callback function called to end the loop early with optional error message parameter
+
+### `run(func)`
+Return new instance of `syncFuncLoop`
+
+#### Params
+- **syncFuncLoopCallback** `func`: The initial callback function to run
 
 ## How to contribute
 
@@ -96,4 +119,5 @@ Blocks until a condition is met
    message.
 
 ## License
+
 See the [LICENSE](./LICENSE) file.
