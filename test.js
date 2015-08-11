@@ -5,7 +5,12 @@ var test = require('tape'),
   test('forEachSync', function(t) {
 
     t.test('empty list passed in', function(st) {
-      asyncUtils.forEachSync([], null, function() {
+      asyncUtils.forEachSync([],
+      function() {
+        st.fail('cb should not have been called');
+        st.end();
+      },
+      function() {
         st.pass('fin should have been called');
         st.end();
       });
@@ -22,11 +27,11 @@ var test = require('tape'),
         setTimeout(function() {
           list.push(i);
           next();
-        }, 100);
+        }, 10);
       },
       function() {
         st.deepEqual(list, numbers, 'all numbers should have been added');
-        st.ok(Date.now() - time > 100 * numbers.length, 'should have run synchronously');
+        st.ok(Date.now() - time > 10 * numbers.length, 'should have run synchronously');
         st.end();
       });
     });
@@ -34,7 +39,6 @@ var test = require('tape'),
     t.test('fin called early', function(st) {
       var list = [];
       var numbers = [1, 2, 3, 4, 5];
-      var time = Date.now();
 
       asyncUtils.forEachSync(numbers,
       function(i, next, fin) {
@@ -45,7 +49,7 @@ var test = require('tape'),
           } else {
             next();
           }
-        }, 100);
+        }, 10);
       },
       function(err) {
         st.deepEqual(list, numbers.filter(function(i) {
@@ -60,7 +64,59 @@ var test = require('tape'),
 
   test('forEach', function(t) {
 
-    t.end();
+    t.test('empty list passed in', function(st) {
+      asyncUtils.forEach([],
+      function() {
+        st.fail('cb should not have been called');
+        st.end();
+      },
+      function() {
+        st.fail('fin should not have been called');
+        st.end();
+      });
+
+      st.pass('neither callback should have been run');
+      st.end();
+    });
+
+    t.test('cb run for each item', function(st) {
+      var list = [];
+      var numbers = [1, 2, 3, 4, 5];
+      var time = Date.now();
+
+      asyncUtils.forEach(numbers,
+      function(i, done) {
+        st.ok(numbers.indexOf(i) > -1, i + ' is in original list');
+        setTimeout(function() {
+          list.push(i);
+          done();
+        }, 10);
+      },
+      function() {
+        st.deepEqual(list, numbers, 'all numbers should have been added');
+        st.ok(Date.now() - time < 20, 'should have run asynchronously');
+        st.end();
+      });
+    });
+
+    t.test('fin called with error', function(st) {
+      var list = [];
+      var numbers = [1, 2, 3, 4, 5];
+
+      asyncUtils.forEach(numbers,
+      function cb(i, done) {
+        st.ok(numbers.indexOf(i) > -1, i + ' is in original list');
+        setTimeout(function() {
+          list.push(i);
+          done(i % 2 === 0);
+        }, 10);
+      },
+      function fin(err) {
+        st.deepEqual(list, numbers, 'all numbers should have been added');
+        st.equal(err, true, 'fin should be called with err argument');
+        st.end();
+      });
+    });
 
   });
 
