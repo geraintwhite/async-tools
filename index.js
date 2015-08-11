@@ -47,7 +47,7 @@ module.exports = (function () {
   asyncUtils.forEach = function (list, cb, fin) {
     var i = 0, error = false;
     function done (err) {
-      error = error || (err || false);
+      error = err || error;
       if (++i == list.length) fin(error);
     }
     list.forEach(function (item) { cb(item, done); });
@@ -117,7 +117,7 @@ module.exports = (function () {
   asyncUtils.forEachFunction = function (funcs, fin) {
     var i = 0, error = false;
     function done (err) {
-      error = error || (err || false);
+      error = err || error;
       if (++i == funcs.length) fin(error);
     }
     funcs.forEach(function (func) { func(done); });
