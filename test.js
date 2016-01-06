@@ -71,12 +71,9 @@ var test = require('tape'),
         st.end();
       },
       function() {
-        st.fail('fin should not have been called');
+        st.pass('fin should have been called');
         st.end();
       });
-
-      st.pass('neither callback should have been run');
-      st.end();
     });
 
     t.test('cb run for each item', function(st) {

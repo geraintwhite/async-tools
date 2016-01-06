@@ -45,11 +45,12 @@ module.exports = (function () {
    */
 
   asyncUtils.forEach = function (list, cb, fin) {
-    var i = 0, error = false;
+    var i = -1, error = false;
     function done (err) {
       error = err || error;
       if (++i == list.length) fin(error);
     }
+    done();
     list.forEach(function (item) { cb(item, done); });
   };
 
@@ -115,11 +116,12 @@ module.exports = (function () {
    */
 
   asyncUtils.forEachFunction = function (funcs, fin) {
-    var i = 0, error = false;
+    var i = -1, error = false;
     function done (err) {
       error = err || error;
       if (++i == funcs.length) fin(error);
     }
+    done();
     funcs.forEach(function (func) { func(done); });
   };
 
