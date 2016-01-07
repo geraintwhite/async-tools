@@ -133,12 +133,15 @@ var test = require('tape'),
     });
 
     t.test('infinite loop', function(st) {
-      var i = 0, limit = 10;
+      var i = 1, limit = 10;
       asyncUtils.whileSync(
       function cb(next) {
         st.pass('cb called ' + i + ' times');
-        if (++i === limit) return st.end();
-        next(true);
+        if (++i <= limit) {
+          next(true);
+        } else {
+          st.end();
+        }
       },
       function fin() {
         st.fail('fin should not have been called');
@@ -160,14 +163,14 @@ var test = require('tape'),
     });
 
     t.test('loop ended after n calls', function(st) {
-      var i = 0, limit = 10;
+      var i = 1, limit = 10;
       asyncUtils.whileSync(
       function cb(next) {
         st.pass('cb called ' + i + ' times');
-        next(++i < limit);
+        next(++i <= limit);
       },
       function fin() {
-        st.equal(i, limit, 'fin should have been called after n loops');
+        st.equal(i - 1, limit, 'fin should have been called after n loops');
         st.end();
       });
     });
