@@ -190,7 +190,63 @@ var test = require('tape'),
 
   test('forEachFunctionSync', function(t) {
 
-    t.end();
+    t.test('empty array passed in', function(st) {
+      asyncUtils.forEachFunctionSync([],
+      function fin() {
+        st.pass('fin should have been called');
+        st.end();
+      });
+    });
+
+    t.test('each function in array called sequentially', function(st) {
+      var list = [];
+      var numbers = [1, 2, 3, 4, 5];
+      var time = Date.now();
+
+      function f(i) {
+        return function(next) {
+          st.ok(numbers.indexOf(i) > -1, i + ' is in original list');
+          setTimeout(function() {
+            list.push(i);
+            next();
+          }, 10);
+        };
+      }
+
+      asyncUtils.forEachFunctionSync([f(1), f(2), f(3), f(4), f(5)],
+      function fin() {
+        st.deepEqual(list, numbers, 'all numbers should have been added');
+        st.ok(Date.now() - time > 10 * numbers.length, 'should have run synchronously');
+        st.end();
+      });
+    });
+
+    t.test('fin called early', function(st) {
+      var list = [];
+      var numbers = [1, 2, 3, 4, 5];
+      var time = Date.now();
+
+      function f(i) {
+        return function(next, fin) {
+          st.ok(numbers.indexOf(i) > -1, i + ' is in original list');
+          setTimeout(function() {
+            list.push(i);
+            if (i > 2) {
+              fin(i);
+            } else {
+              next();
+            }
+          }, 10);
+        };
+      }
+
+      asyncUtils.forEachFunctionSync([f(1), f(2), f(3), f(4), f(5)],
+      function fin(err) {
+        st.deepEqual(list, numbers.filter(i => i < 4), 'numbers less than 4 should have been added');
+        st.equal(err, 3, 'correct error parameter passed in');
+        st.end();
+      });
+    });
 
   });
 
