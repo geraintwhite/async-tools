@@ -242,7 +242,9 @@ var test = require('tape'),
 
       asyncUtils.forEachFunctionSync([f(1), f(2), f(3), f(4), f(5)],
       function fin(err) {
-        st.deepEqual(list, numbers.filter(i => i < 4), 'numbers less than 4 should have been added');
+        st.deepEqual(list, numbers.filter(function(i) {
+          return i < 4;
+        }), 'numbers less than 4 should have been added');
         st.equal(err, 3, 'correct error parameter passed in');
         st.end();
       });
