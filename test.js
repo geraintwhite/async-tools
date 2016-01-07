@@ -257,7 +257,59 @@ var test = require('tape'),
 
   test('forEachFunction', function(t) {
 
-    t.end();
+    t.test('empty array passed in', function(st) {
+      asyncUtils.forEachFunction([],
+      function fin() {
+        st.pass('fin should have been called');
+        st.end();
+      });
+    });
+
+    t.test('each function in array called simultaneously', function(st) {
+      var list = [];
+      var numbers = [1, 2, 3, 4, 5];
+      var time = Date.now();
+
+      function f(i) {
+        return function(done) {
+          st.ok(numbers.indexOf(i) > -1, i + ' is in original list');
+          setTimeout(function() {
+            list.push(i);
+            done();
+          }, 10);
+        };
+      }
+
+      asyncUtils.forEachFunction([f(1), f(2), f(3), f(4), f(5)],
+      function fin() {
+        st.deepEqual(list, numbers, 'all numbers should have been added');
+        st.ok(Date.now() - time < 20, 'should have run asynchronously');
+        st.end();
+      });
+    });
+
+    t.test('fin called with error', function(st) {
+      var list = [];
+      var numbers = [1, 2, 3, 4, 5];
+      var time = Date.now();
+
+      function f(i) {
+        return function(done) {
+          st.ok(numbers.indexOf(i) > -1, i + ' is in original list');
+          setTimeout(function() {
+            list.push(i);
+            done(i % 2 === 0);
+          }, 10);
+        };
+      }
+
+      asyncUtils.forEachFunction([f(1), f(2), f(3), f(4), f(5)],
+      function fin(err) {
+        st.deepEqual(list, numbers, 'all numbers should have been added');
+        st.equal(err, true, 'fin should be called with err argument');
+        st.end();
+      });
+    });
 
   });
 
