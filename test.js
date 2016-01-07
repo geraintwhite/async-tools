@@ -119,7 +119,72 @@ var test = require('tape'),
 
   test('whileSync', function(t) {
 
-    t.end();
+    t.test('cb called once', function(st) {
+      var i = 0;
+      asyncUtils.whileSync(
+      function cb() {
+        st.equal(++i, 1, 'cb only called once');
+        st.end();
+      },
+      function fin() {
+        st.fail('fin should not have been called');
+        st.end();
+      });
+    });
+
+    t.test('infinite loop', function(st) {
+      var i = 0, limit = 10;
+      asyncUtils.whileSync(
+      function cb(next) {
+        st.pass('cb called ' + i + ' times');
+        if (++i === limit) return st.end();
+        next(true);
+      },
+      function fin() {
+        st.fail('fin should not have been called');
+        st.end();
+      });
+    });
+
+    t.test('loop ended after one call', function(st) {
+      var i = 0;
+      asyncUtils.whileSync(
+      function cb(next) {
+        st.equal(++i, 1, 'cb called once');
+        next(false);
+      },
+      function fin() {
+        st.equal(i, 1, 'fin should have been called after one loop');
+        st.end();
+      });
+    });
+
+    t.test('loop ended after n calls', function(st) {
+      var i = 0, limit = 10;
+      asyncUtils.whileSync(
+      function cb(next) {
+        st.pass('cb called ' + i + ' times');
+        next(++i < limit);
+      },
+      function fin() {
+        st.equal(i, limit, 'fin should have been called after n loops');
+        st.end();
+      });
+    });
+
+    t.test('loop ended by external change', function(st) {
+      var done = false, start = Date.now(), duration = 100;
+
+      setTimeout(function() { done = true; }, duration);
+      asyncUtils.whileSync(
+      function cb(next) {
+        setTimeout(function() { next(!done); }, 1);
+      },
+      function fin() {
+        st.ok(Date.now() - start - duration < 2, 'fin should have been called after ' + duration + ' ms');
+        st.end();
+      });
+    });
 
   });
 
