@@ -4,7 +4,8 @@
   "description": "Useful async functions",
   "main": "index.js",
   "scripts": {
-    "test": "tape test.js | tap-spec"
+    "test": "tape test.js | tap-spec",
+    "cover": "istanbul cover tape test.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/grit96/async-tools#readme",
   "devDependencies": {
+    "istanbul": "^0.4.1",
     "tap-spec": "^4.0.2",
     "tape": "^4.0.3"
   }
