@@ -1,5 +1,8 @@
 # async-tools
 
+[![NPM Version](https://img.shields.io/npm/v/async-tools.svg)](https://www.npmjs.com/package/async-tools)
+[![Build Status](https://img.shields.io/travis/grit96/async-tools/master.svg)](https://travis-ci.org/grit96/async-tools)
+
 Useful async functions
 
 ## Installation
