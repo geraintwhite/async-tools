@@ -177,7 +177,7 @@ module.exports = (function () {
 
     function next() {
       if (funcs.length) funcs.shift()(next, fin);
-      else if (typeof fin === 'function') fin();
+      else fin();
     }
   }
 
