@@ -1,0 +1,8 @@
+{
+  "sub": true,
+  "node": true,
+  "browser": true,
+  "eqeqeq": true,
+  "undef": true,
+  "unused": true
+}
