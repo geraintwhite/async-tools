@@ -382,6 +382,100 @@ var test = require('tape'),
 
   test('run', function(t) {
 
-    t.end();
+    t.test('run single function', function(st) {
+      asyncUtils.run(function() {
+        st.pass('function passed in should be run');
+        st.end();
+      }).finally();
+    });
+
+    t.test('add a finally', function(st) {
+      asyncUtils.run(function(next) {
+        st.pass('function passed in should be run');
+        next();
+      }).finally(function() {
+        st.pass('finally should be run');
+        st.end();
+      });
+    });
+
+    t.test('all functions added through then are run', function(st) {
+      var list = [];
+      var numbers = [1, 2, 3, 4, 5];
+      var time = Date.now();
+
+      function f(i) {
+        return function(next) {
+          st.ok(numbers.indexOf(i) > -1, i + ' is in original list');
+          setTimeout(function() {
+            list.push(i);
+            next();
+          }, 10);
+        };
+      }
+
+      asyncUtils.run(function(next) {
+        st.pass('function passed in should be run');
+        next();
+      })
+      .then(f(1))
+      .then(f(2))
+      .then(f(3))
+      .then(f(4))
+      .then(f(5))
+      .finally(function() {
+        st.deepEqual(list, numbers, 'all numbers should have been added');
+        st.ok(Date.now() - time > 10 * numbers.length, 'should have run synchronously');
+        st.end();
+      });
+    });
+
+    t.test('fin called early from then', function(st) {
+      var list = [];
+      var numbers = [1, 2, 3, 4, 5];
+
+      function f(i) {
+        return function(next, fin) {
+          st.ok(numbers.indexOf(i) > -1, i + ' is in original list');
+          setTimeout(function() {
+            list.push(i);
+            if (i > 2) {
+              fin(i);
+            } else {
+              next();
+            }
+          }, 10);
+        };
+      }
+
+      asyncUtils.run(function(next) {
+        st.pass('function passed in should be run');
+        next();
+      })
+      .then(f(1))
+      .then(f(2))
+      .then(f(3))
+      .then(f(4))
+      .then(f(5))
+      .finally(function(err) {
+        st.deepEqual(list, numbers.filter(function(i) {
+          return i < 4;
+        }), 'numbers less than 4 should have been added');
+        st.equal(err, 3, 'correct error parameter passed in');
+        st.end();
+      });
+    });
+
+    t.test('fin called early from run', function(st) {
+      var msg = 'hello world';
+
+      asyncUtils.run(function(next, fin) {
+        st.pass('function passed in should be run');
+        fin(msg);
+      }).finally(function(err) {
+        st.equal(err, msg, 'correct error parameter passed in');
+        st.end();
+      });
+    });
 
   });
