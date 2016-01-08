@@ -139,7 +139,7 @@ module.exports = (function () {
     if (!dur) dur = 500;
     (function check () {
       if (cond()) cb();
-      else setTimeout(function () { check(); }, dur);
+      else setTimeout(check, dur);
     })();
   };
 
