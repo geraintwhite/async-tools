@@ -222,7 +222,10 @@ var test = require('tape'),
         };
       }
 
-      asyncUtils.forEachFunctionSync([f(1), f(2), f(3), f(4), f(5)],
+      asyncUtils.forEachFunctionSync(
+      numbers.map(function(i) {
+        return f(i);
+      }),
       function fin() {
         st.deepEqual(list, numbers, 'all numbers should have been added');
         st.ok(Date.now() - time > 10 * numbers.length, 'should have run synchronously');
@@ -248,7 +251,10 @@ var test = require('tape'),
         };
       }
 
-      asyncUtils.forEachFunctionSync([f(1), f(2), f(3), f(4), f(5)],
+      asyncUtils.forEachFunctionSync(
+      numbers.map(function(i) {
+        return f(i);
+      }),
       function fin(err) {
         st.deepEqual(list, numbers.filter(function(i) {
           return i < 4;
