@@ -323,7 +323,54 @@ var test = require('tape'),
 
   test('wait', function(t) {
 
-    t.end();
+    t.test('condition true immediately', function(st) {
+      var start = Date.now();
+
+      asyncUtils.wait(
+      function cond() {
+        st.pass('condition checked before calling cb');
+        return true;
+      },
+      function cb() {
+        st.ok(Date.now() - start < 5, 'cb called immediately');
+        st.end();
+      });
+    });
+
+    t.test('condition true after one check', function(st) {
+      var done = false;
+      var i = 0;
+
+      setTimeout(function() { done = true; }, 0);
+      asyncUtils.wait(
+      function cond() {
+        st.ok(++i <= 2, 'condition checked ' + i + ' times');
+        return done;
+      },
+      function cb() {
+        st.equal(done, true, 'done should now be true');
+        st.end();
+      });
+    });
+
+    t.test('custom duration passed in', function(st) {
+      var done = false;
+      var duration = 10;
+      var limit = 5;
+      var i = 0;
+
+      setTimeout(function() { done = true; }, duration * limit);
+      asyncUtils.wait(
+      function cond() {
+        st.ok(++i <= limit + 1, 'condition checked ' + i + ' times');
+        return done;
+      },
+      function cb() {
+        st.equal(i, limit + 1, 'condition should be checked ' + limit + ' times');
+        st.equal(done, true, 'done should now be true');
+        st.end();
+      }, duration);
+    });
 
   });
 
