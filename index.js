@@ -22,7 +22,7 @@ module.exports = (function () {
   asyncUtils.forEachSync = function (list, cb, fin) {
     var i = -1;
     (function next () {
-      if (++i == list.length) fin();
+      if (++i === list.length) fin();
       else cb(list[i], next, fin);
     })();
   };
@@ -48,7 +48,7 @@ module.exports = (function () {
     var i = -1, error = false;
     function done (err) {
       error = err || error;
-      if (++i == list.length) fin(error);
+      if (++i === list.length) fin(error);
     }
     done();
     list.forEach(function (item) { cb(item, done); });
@@ -95,7 +95,7 @@ module.exports = (function () {
   asyncUtils.forEachFunctionSync = function (funcs, fin) {
     var i = -1;
     (function next () {
-      if (++i == funcs.length) fin();
+      if (++i === funcs.length) fin();
       else funcs[i](next, fin);
     })();
   };
@@ -119,7 +119,7 @@ module.exports = (function () {
     var i = -1, error = false;
     function done (err) {
       error = err || error;
-      if (++i == funcs.length) fin(error);
+      if (++i === funcs.length) fin(error);
     }
     done();
     funcs.forEach(function (func) { func(done); });
