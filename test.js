@@ -76,7 +76,7 @@ var test = require('tape'),
       });
     });
 
-    t.test('cb run for each item', function(st) {
+    t.test('cb run for each item simultaneously', function(st) {
       var list = [];
       var numbers = [1, 2, 3, 4, 5];
       var time = Date.now();
