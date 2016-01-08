@@ -119,6 +119,7 @@ var test = require('tape'),
 
     t.test('cb called once', function(st) {
       var i = 0;
+
       asyncUtils.whileSync(
       function cb() {
         st.equal(++i, 1, 'cb only called once');
@@ -131,7 +132,9 @@ var test = require('tape'),
     });
 
     t.test('infinite loop', function(st) {
-      var i = 1, limit = 10;
+      var i = 1;
+      var limit = 10;
+
       asyncUtils.whileSync(
       function cb(next) {
         st.pass('cb called ' + i + ' times');
@@ -149,6 +152,7 @@ var test = require('tape'),
 
     t.test('loop ended after one call', function(st) {
       var i = 0;
+
       asyncUtils.whileSync(
       function cb(next) {
         st.equal(++i, 1, 'cb called once');
@@ -161,7 +165,9 @@ var test = require('tape'),
     });
 
     t.test('loop ended after n calls', function(st) {
-      var i = 1, limit = 10;
+      var i = 1;
+      var limit = 10;
+
       asyncUtils.whileSync(
       function cb(next) {
         st.pass('cb called ' + i + ' times');
@@ -174,7 +180,9 @@ var test = require('tape'),
     });
 
     t.test('loop ended by external change', function(st) {
-      var done = false, start = Date.now(), duration = 100;
+      var done = false;
+      var start = Date.now();
+      var duration = 100;
 
       setTimeout(function() { done = true; }, duration);
       asyncUtils.whileSync(
