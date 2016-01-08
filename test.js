@@ -190,7 +190,7 @@ var test = require('tape'),
         setTimeout(function() { next(!done); }, 1);
       },
       function fin() {
-        st.ok(Date.now() - start - duration < 2, 'fin should have been called after ' + duration + ' ms');
+        st.ok(Date.now() - start - duration < 5, 'fin should have been called after ' + duration + ' ms');
         st.end();
       });
     });
