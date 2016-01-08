@@ -78,8 +78,7 @@ var test = require('tape'),
 
     t.test('cb run for each item simultaneously', function(st) {
       var list = [];
-      var numbers = [1, 2, 3, 4, 5];
-      var time = Date.now();
+      var numbers = [3, 1, 4, 2, 5];
 
       asyncUtils.forEach(numbers,
       function cb(i, done) {
@@ -87,18 +86,17 @@ var test = require('tape'),
         setTimeout(function() {
           list.push(i);
           done();
-        }, 10);
+        }, 10 * i);
       },
       function fin() {
-        st.deepEqual(list, numbers, 'all numbers should have been added');
-        st.ok(Date.now() - time < 20, 'should have run asynchronously');
+        st.deepEqual(list, numbers.sort(), 'all numbers should have been added in the correct order');
         st.end();
       });
     });
 
     t.test('fin called with error', function(st) {
       var list = [];
-      var numbers = [1, 2, 3, 4, 5];
+      var numbers = [3, 1, 4, 2, 5];
 
       asyncUtils.forEach(numbers,
       function cb(i, done) {
@@ -106,10 +104,10 @@ var test = require('tape'),
         setTimeout(function() {
           list.push(i);
           done(i % 2 === 0);
-        }, 10);
+        }, 10 * i);
       },
       function fin(err) {
-        st.deepEqual(list, numbers, 'all numbers should have been added');
+        st.deepEqual(list, numbers.sort(), 'all numbers should have been added in the correct order');
         st.equal(err, true, 'fin should be called with err argument');
         st.end();
       });
@@ -227,7 +225,6 @@ var test = require('tape'),
     t.test('fin called early', function(st) {
       var list = [];
       var numbers = [1, 2, 3, 4, 5];
-      var time = Date.now();
 
       function f(i) {
         return function(next, fin) {
@@ -267,8 +264,7 @@ var test = require('tape'),
 
     t.test('each function in array called simultaneously', function(st) {
       var list = [];
-      var numbers = [1, 2, 3, 4, 5];
-      var time = Date.now();
+      var numbers = [3, 1, 4, 2, 5];
 
       function f(i) {
         return function(done) {
@@ -276,22 +272,23 @@ var test = require('tape'),
           setTimeout(function() {
             list.push(i);
             done();
-          }, 10);
+          }, 10 * i);
         };
       }
 
-      asyncUtils.forEachFunction([f(1), f(2), f(3), f(4), f(5)],
+      asyncUtils.forEachFunction(
+      numbers.map(function(i) {
+        return f(i);
+      }),
       function fin() {
-        st.deepEqual(list, numbers, 'all numbers should have been added');
-        st.ok(Date.now() - time < 20, 'should have run asynchronously');
+        st.deepEqual(list, numbers.sort(), 'all numbers should have been added in the correct order');
         st.end();
       });
     });
 
     t.test('fin called with error', function(st) {
       var list = [];
-      var numbers = [1, 2, 3, 4, 5];
-      var time = Date.now();
+      var numbers = [3, 1, 4, 2, 5];
 
       function f(i) {
         return function(done) {
@@ -299,13 +296,16 @@ var test = require('tape'),
           setTimeout(function() {
             list.push(i);
             done(i % 2 === 0);
-          }, 10);
+          }, 10 * i);
         };
       }
 
-      asyncUtils.forEachFunction([f(1), f(2), f(3), f(4), f(5)],
+      asyncUtils.forEachFunction(
+      numbers.map(function(i) {
+        return f(i);
+      }),
       function fin(err) {
-        st.deepEqual(list, numbers, 'all numbers should have been added');
+        st.deepEqual(list, numbers.sort(), 'all numbers should have been added in the correct order');
         st.equal(err, true, 'fin should be called with err argument');
         st.end();
       });
