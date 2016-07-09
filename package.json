@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "tape test.js | tap-spec",
-    "cover": "istanbul cover tape test.js"
+    "cover": "istanbul cover test.js -x test.js"
   },
   "repository": {
     "type": "git",
