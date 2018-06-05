@@ -19,7 +19,7 @@
   "homepage": "https://github.com/grit96/async-tools#readme",
   "devDependencies": {
     "istanbul": "^0.4.2",
-    "tap-spec": "^4.1.1",
+    "tap-spec": "^5.0.0",
     "tape": "^4.4.0"
   }
 }
