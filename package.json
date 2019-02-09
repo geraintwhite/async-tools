@@ -20,6 +20,6 @@
   "devDependencies": {
     "istanbul": "^0.4.2",
     "tap-spec": "^5.0.0",
-    "tape": "^4.4.0"
+    "tape": "^4.10.0"
   }
 }
