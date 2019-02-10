@@ -4,6 +4,8 @@ var test = require('tape'),
 
   test('forEachSync', function(t) {
 
+    t.plan(3);
+
     t.test('empty list passed in', function(st) {
       asyncUtils.forEachSync([],
       function cb() {
@@ -64,6 +66,8 @@ var test = require('tape'),
 
   test('forEach', function(t) {
 
+    t.plan(3);
+
     t.test('empty list passed in', function(st) {
       asyncUtils.forEach([],
       function cb() {
@@ -116,6 +120,8 @@ var test = require('tape'),
   });
 
   test('whileSync', function(t) {
+
+    t.plan(5);
 
     t.test('cb called once', function(st) {
       var i = 0;
@@ -199,6 +205,8 @@ var test = require('tape'),
 
   test('forEachFunctionSync', function(t) {
 
+    t.plan(3);
+
     t.test('empty array passed in', function(st) {
       asyncUtils.forEachFunctionSync([],
       function fin() {
@@ -268,6 +276,8 @@ var test = require('tape'),
 
   test('forEachFunction', function(t) {
 
+    t.plan(3);
+
     t.test('empty array passed in', function(st) {
       asyncUtils.forEachFunction([],
       function fin() {
@@ -329,6 +339,8 @@ var test = require('tape'),
 
   test('wait', function(t) {
 
+    t.plan(3);
+
     t.test('condition true immediately', function(st) {
       var start = Date.now();
 
@@ -381,6 +393,8 @@ var test = require('tape'),
   });
 
   test('run', function(t) {
+
+    t.plan(5);
 
     t.test('run single function', function(st) {
       asyncUtils.run(function() {
