@@ -1,14 +1,14 @@
 language: node_js
 node_js:
-  - 10
-  - 8
-  - 6
-  - 4
+- 10
+- 8
+- 6
+- 4
 deploy:
   provider: npm
-  email: geraintwhite@gmail.com
+  email: mail@geraintwhite.co.uk
   api_key:
-    secure: Pfkqi2kGjdgRgKjI3RKkz7pmFawilkaqvTs5ssM86cNhVNcCWMa6Wpqdm+U0pvHyvGxnJJH4i8NRLXc/jCdFZdZKYA9+1FOnyntjbWvz6IvpDfIJYLexdmP7JQvhkZ0OzlSKEFbwB9FTC3fThW3UgoGGjG/HfWIQ2a6ClVJQQIXRFTu6+749h2ra3owDhLTNcByhnVfJ3kRGG6x/NMuy0o0KRLbPYpLe4xY+yjqP/1Xx03wSwJFepI/BbKEnS+WYqxoXLjzGlliRJLlqKALSoCDnpokshShYYwwhT7ONY8GUP2s3fDCzyccdjL4XsSQ6mxAJalrWT682PZEzCtmOD7R7QUsIHwDJVahISThmexrSTZ5AzW3rU9am5nqm/lWCB9tbtSTFENVal1gK/l7BqSPBGIt2lcwEWvP9Po0X/OsKNldbYYesljnb0kZaLX5tPu2pK/b42KUu5amtsW5ZYWjBNp/BOh+PtpgBNB0eOwdQTmNc5d7ik4puxNLEfiq8kMN/u4c7hGFPMyxF10i4pg2qd+A5yyKBIjomOdB+5c5X8qCD+ztQT3SGdYhT3/XR9H34ixA3z7D/q+TL9JxP1ZEQrY5IqCGNq0hormhnXbOpxPeOg2XjuIaKZTpOPWD1F9+axsIHsYT9BsgPy/lHS/xCRJ+F1ReTLemO3ROEcPc=
+    secure: tsAebUuPC66fldqlhcSQzJilVrgWfrqH51ZPqQK+4O60Y0dpg/mEhLn5PxR0kiOxoSrki5vi109Hl0TMXOTzRQXXY+hVbGlFk82Sisuw/MW69p6S0OvTIOxObnAh97m/yj2BUgcHaD1pmsSDwfDClhK/WVwpZChV82fm6fJWQqnPeuzaZyaIwwScXUnsSDmppBwa/Opuv1XNs5SEd37aZUF882cQjJ8syuF0MEdv90iIPFFOB72reu7tMqGAI8IoJDU/ddi4vdPL40QgMevpGyGKoZq5sOEnhlZNyChV+77Ah/dyl1UFRQ31w9QpRimb5lkWWoEOvPzr3oNXLTf5nToE8UnhHoLgcKskZlS3CEIhV/AlyXIOOHJXDFpSdPmwxODf+2Vgr9ox3a89cIHFPXvhYiuycg9mtJXBnDIhXxbfT/9fqm55SmVOgI5FnK5CFH+djwhsgRh0U8pNQ2fPJBkbPmOeJVhqK/2o8cFIH4yeGN9DbRVyKA6uE9pCPmYVHeVC+hpD0gSLp5kJRYby/krUxo0ADPpQgox0L0ytOHzcmXAykeMF7vDJHrlQAhQmMvVIYp5Oe6+Bn9TKuR0MTZlv+rsv/cSsVLtznrN66g+VuptJ6I2vC4LYG86oCrnlO1ZEID4qNNj8DWK1el2zasXzZgD1+gojzxL008m3lCo=
   on:
     tags: true
     repo: grit96/async-tools
