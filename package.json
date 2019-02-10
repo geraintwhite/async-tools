@@ -1,6 +1,6 @@
 {
   "name": "async-tools",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Useful async functions",
   "main": "index.js",
   "scripts": {
